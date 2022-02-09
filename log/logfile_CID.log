@@ -1,0 +1,49 @@
+resender     : 2022-02-09 12:08:08,320 : ERROR : <module> : Exception type : Exception Exception message : Wrong message type - expected: 18 Stack Trace ['File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py , Line : 48, Func.Name : <module>, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py , Line : 88, Func.Name : process_incomming_CID, Message : raise Exception("Wrong message type - expected: 18")']
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-09 12:08:08,321 : ERROR : <module> : Wrong message type - expected: 18
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-09 12:09:17,628 : ERROR : <module> : Exception type : Exception Exception message : Wrong message type - expected: 18 Stack Trace ['File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py , Line : 48, Func.Name : <module>, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py , Line : 88, Func.Name : process_incomming_CID, Message : raise Exception("Wrong message type - expected: 18")']
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-09 12:09:17,629 : ERROR : <module> : Wrong message type - expected: 18
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-09 12:10:47,309 : ERROR : <module> : Exception type : Exception Exception message : Wrong CID - Qualifier not suported Stack Trace ['File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py , Line : 48, Func.Name : <module>, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py , Line : 91, Func.Name : process_incomming_CID, Message : raise Exception("Wrong CID - Qualifier not suported")']
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 91, in process_incomming_CID
+    raise Exception("Wrong CID - Qualifier not suported")
+Exception: Wrong CID - Qualifier not suported
+resender     : 2022-02-09 12:10:47,310 : ERROR : <module> : Wrong CID - Qualifier not suported
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in <module>
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 91, in process_incomming_CID
+    raise Exception("Wrong CID - Qualifier not suported")
+Exception: Wrong CID - Qualifier not suported
+resender     : 2022-02-09 12:51:26,273 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 24 Stack Trace ['File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py , Line : 48, Func.Name : mainFunc, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/resender.py", line 48, in mainFunc
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 24
