@@ -47,3 +47,80 @@ Traceback (most recent call last):
   File "/media/alviunta/Alvaro/Proyecto - Comunicador/Server/Reenvio/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
     raise Exception("Message length error - must be 21 {}".format(len(recived)))
 Exception: Message length error - must be 21 24
+resender     : 2022-02-14 11:25:07,504 : ERROR : mainFunc : Exception type : Exception Exception message : Wrong message type - expected: 18 Stack Trace ['File : resender.py , Line : 48, Func.Name : mainFunc, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 88, Func.Name : process_incomming_CID, Message : raise Exception("Wrong message type - expected: 18")']
+Traceback (most recent call last):
+  File "resender.py", line 48, in mainFunc
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-14 11:53:52,739 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 6 Stack Trace ['File : resender.py , Line : 54, Func.Name : mainFunc, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 54, in mainFunc
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 6
+resender     : 2022-02-14 11:55:20,523 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 6 Stack Trace ['File : resender.py , Line : 54, Func.Name : mainFunc, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 54, in mainFunc
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 6
+resender     : 2022-02-15 11:24:24,970 : ERROR : mainFunc : Exception type : Exception Exception message : Wrong message type - expected: 18 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 88, Func.Name : process_incomming_CID, Message : raise Exception("Wrong message type - expected: 18")']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 88, in process_incomming_CID
+    raise Exception("Wrong message type - expected: 18")
+Exception: Wrong message type - expected: 18
+resender     : 2022-02-15 11:27:13,525 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 0 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 0
+resender     : 2022-02-15 11:27:54,407 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 5 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 5
+resender     : 2022-02-15 11:28:14,525 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 5 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 5
+resender     : 2022-02-15 11:28:23,120 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 5 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 5
+resender     : 2022-02-15 11:28:34,292 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 6 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 6
+resender     : 2022-02-15 11:29:19,576 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 5 Stack Trace ["File : resender.py , Line : 55, Func.Name : mainFunc, Message : print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )", 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 55, in mainFunc
+    print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 5
+resender     : 2022-02-15 11:57:09,231 : ERROR : mainFunc : Exception type : Exception Exception message : Message length error - must be 21 26 Stack Trace ['File : resender.py , Line : 60, Func.Name : mainFunc, Message : proceced_message = contactid.process_incomming_CID(recived_CID)', 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
+Traceback (most recent call last):
+  File "resender.py", line 60, in mainFunc
+    proceced_message = contactid.process_incomming_CID(recived_CID)
+  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
+    raise Exception("Message length error - must be 21 {}".format(len(recived)))
+Exception: Message length error - must be 21 26

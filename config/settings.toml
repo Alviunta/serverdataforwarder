@@ -1,0 +1,44 @@
+#CONFIGURATION FILE FOR SERVER-DATA-FORWARDER
+dynaconf_merge = true
+[DEFAULT]
+value = 1
+[MQTT]
+    #
+    [MQTT.endpoint]
+    address = "127.0.0.1"
+    port = 1234
+
+    [MQTT.logger]
+    name = "MQTT_LOG"
+    level = "DEBUG"                     #DEBUG/INFO/WARNING/ERROR/CRITICAL
+    output = "FILE"                     #FILE/CONSOLE
+    filename = "logfile_MQTT.log"
+
+    [MQTT.attributes]
+    qos = 0
+
+
+#---------SIA DC09 CONFIGURATION-------
+[DC09]
+    [DC09.endpoint]
+    #Ip/puerto recibidora destino
+    address = "172.31.224.218" 
+    port = 62000
+    type = "UDP" # UDP o TCP
+    mb = "main" #main/back-up
+    ps = "primary"    #primary/secondary
+
+    [DC09.logger]
+    #Logger configuration
+    name = "SIA_LOG"
+    level = "DEBUG"
+    output = "FILE"
+    filename = "logfile_SIA.log"
+
+    [DC09.attributes]
+    receiver = "0"
+    line = "0"
+    account = "FFFF"
+    heartbeat = 600 #Intervalo en segundos del keepalive
+    pollmsg = "RP"  #Mensaje usado para keepalive CODIGO SIA!
+#---------------------------------------

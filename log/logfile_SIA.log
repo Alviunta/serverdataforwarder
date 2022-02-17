@@ -1,0 +1,7 @@
+resender     : 2022-02-14 11:25:28,407 : ERROR : mainFunc : Exception type : AttributeError Exception message : module 'dc09_spt' has no attribute 'dc09_spt' Stack Trace ["File : resender.py , Line : 63, Func.Name : mainFunc, Message : spt = connectspt('FFFF')", 'File : resender.py , Line : 13, Func.Name : connectspt, Message : spt = dc09.dc09_spt(sptaccount)']
+Traceback (most recent call last):
+  File "resender.py", line 63, in mainFunc
+    spt = connectspt('FFFF')
+  File "resender.py", line 13, in connectspt
+    spt = dc09.dc09_spt(sptaccount)
+AttributeError: module 'dc09_spt' has no attribute 'dc09_spt'
