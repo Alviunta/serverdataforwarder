@@ -8,4 +8,5 @@ for key, value in settings.items() :
 a = settings.get('MQTT')
 print(a.get('credentials'))
 
-print(a['credentials']['user'])
+print(a['credentials']['username'])
+print(a.credentials.username)

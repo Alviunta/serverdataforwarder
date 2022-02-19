@@ -2,21 +2,34 @@
 dynaconf_merge = true
 [DEFAULT]
 value = 1
+#---------MQTT Configuration ---------
 [MQTT]
-    #
     [MQTT.endpoint]
-    address = "127.0.0.1"
-    port = 1234
+    #Ip/puerto broker
+    address = "192.168.1.99"
+    port = 1883
 
     [MQTT.logger]
     name = "MQTT_LOG"
-    level = "DEBUG"                     #DEBUG/INFO/WARNING/ERROR/CRITICAL
+    level = 10                     #DEBUG 10/INFO 20/WARNING 30/ERROR 40/CRITICAL 50
     output = "FILE"                     #FILE/CONSOLE
     filename = "logfile_MQTT.log"
+    rotating = true
+    rotatingset = ["midnight", "7"]
 
     [MQTT.attributes]
     qos = 0
+    topic = "application/3/#"
 
+#---------CID CONFIGURATION ----------    
+[CID]
+    [CID.logger]
+    name = "CID_LOG"
+    level = 10                     #DEBUG 10/INFO 20/WARNING 30/ERROR 40/CRITICAL 50
+    output = "FILE"                     #FILE/CONSOLE
+    filename = "logfile_CID.log"
+    rotating = true
+    rotatingset = ["midnight", "7"]
 
 #---------SIA DC09 CONFIGURATION-------
 [DC09]
@@ -31,13 +44,15 @@ value = 1
     [DC09.logger]
     #Logger configuration
     name = "SIA_LOG"
-    level = "DEBUG"
+    level = 10                     #DEBUG 10/INFO 20/WARNING 30/ERROR 40/CRITICAL 50
     output = "FILE"
     filename = "logfile_SIA.log"
+    rotating = true
+    rotatingset = ["midnight", "7"]
 
     [DC09.attributes]
-    receiver = "0"
-    line = "0"
+    receiver = 0
+    line = 0
     account = "FFFF"
     heartbeat = 600 #Intervalo en segundos del keepalive
     pollmsg = "RP"  #Mensaje usado para keepalive CODIGO SIA!
