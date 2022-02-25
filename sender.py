@@ -1,6 +1,6 @@
 import sys
 import traceback
-import logging
+import logging, logging.config
 import logging.handlers
 sys.path.append('./lib')
 import contact_id as contactid
@@ -42,9 +42,10 @@ def initialize_config():
     global DC09config
     DC09config= settings.get("DC09")
     global logger_CID 
-    logger_CID = setup_logger('CID_LOG', 'log/logfile_CID.log', logging.DEBUG)
+    #logger_CID = setup_logger('CID_LOG', 'log/logfile_CID.log', logging.DEBUG)
     global logger_SIA 
-    logger_SIA = setup_logger('SIA_LOG', 'log/logfile_SIA.log', logging.DEBUG)
+    #logger_SIA = setup_logger('SIA_LOG', 'log/logfile_SIA.log', logging.DEBUG)
+    logging.config.fileConfig('./config/logger.conf')
     global spt 
     spt = None
     spt = setup_siaspt()

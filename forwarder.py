@@ -1,31 +1,15 @@
-import sys, traceback, logging, logging.handlers, datetime, json
+import sys, traceback, datetime, json
+import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
 from dc09_spt import dc09_spt as dc09
-import contact_id as contactid
-from config.config import settings
+from contact_id import contact_id as contactid
+from config.config import settings, LOGGING_CONFIG
 from paho.mqtt import client as mqtt_client
 
-def setup_logger(config):
-    config = config.get('logger')
-    formatter = logging.Formatter('%(module)s : %(asctime)s : %(levelname)s : %(funcName)s : %(message)s')
-    if (config['output'] == "CONSOLE"):
-        handler = logging.StreamHandler()
-    elif (config.output == "FILE"):
-        if config.rotating is False:
-            handler = logging.FileHandler("log/"+config.filename)
-        else:
-            handler = logging.handlers.TimedRotatingFileHandler("log/"+config.filename, when=config.rotatingset[0], backupCount=int(config.rotatingset[1]))
-    else:
-        handler = logging.NullHandler()
-    logger = logging.getLogger(config.name)
-    logger.setLevel(config.level)
-    logger.addHandler(handler)
-    
-    return logger
 
 def callback(itype, idata):
-    logger_SIA.info("Callback type " + itype + " data :"+ idata)
+    logger_SIA.info("Callback type " + itype + " data :"+ str(idata))
 
 def setup_siaspt():
     spt = dc09.dc09_spt(DC09config['attributes']['account'])
@@ -62,25 +46,27 @@ def subscribe (client: mqtt_client):
     client.on_message = on_message
     
 def initializeconfig():
-    global CIDconfig
+
+    global CIDconfig, MQTTconfig, DC09config
     CIDconfig = settings.get("CID")
-    global logger_CID 
-    logger_CID = setup_logger(CIDconfig)
-    
-    global MQTTconfig
     MQTTconfig = settings.get("MQTT")
-    global logger_MQTT
-    logger_MQTT = setup_logger(MQTTconfig)
-    #client = connect_mqtt()
-    #client.loop_forever()
-    #client.enable_logger(logger_MQTT)
-    
-    global logger_SIA 
-    global DC09config
     DC09config= settings.get("DC09")
-    logger_SIA = setup_logger(DC09config)
+
+    logging.config.dictConfig(LOGGING_CONFIG)
+    global logger_CID, logger_MQTT, logger_SIA 
+    logger_CID = logging.getLogger('CID')
+    logger_MQTT = logging.getLogger('MQTT')
+    logger_SIA = logging.getLogger('dc09_spt')
+    
+    client = connect_mqtt()
+    client.enable_logger(logger_MQTT)
+    client.loop_start()
+
     global spt
     spt = setup_siaspt()
+
+    global cid
+    cid = contactid(allowchecksum= CIDconfig.attributes.enablecheksumvalidation, checksumgenerator= CIDconfig.attributes.enablecheksumgenerator, loggername= None)
 
 def loopmain():
     while True:

@@ -1,7 +1,0 @@
-Exception type : Exception Exception message : Message length error - must be 21 6 Stack Trace ['File : forwarder.py , Line : 100, Func.Name : loopmain, Message : processed_message = contactid.process_incomming_CID(recived_CID)', 'File : /home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py , Line : 61, Func.Name : process_incomming_CID, Message : raise Exception("Message length error - must be 21 {}".format(len(recived)))']
-Traceback (most recent call last):
-  File "forwarder.py", line 100, in loopmain
-    processed_message = contactid.process_incomming_CID(recived_CID)
-  File "/home/alviunta/Documents/serverdataforwarder/./lib/contact_id/contact_id.py", line 61, in process_incomming_CID
-    raise Exception("Message length error - must be 21 {}".format(len(recived)))
-Exception: Message length error - must be 21 6
