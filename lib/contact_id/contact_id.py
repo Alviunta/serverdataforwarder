@@ -1,4 +1,5 @@
 import logging
+import string
 
 class contact_id():
     def __init__(self, allowchecksum = True, checksumgenerator = False, separator = ' ', loggername = None):
@@ -13,7 +14,7 @@ class contact_id():
         #AAAA TT QEEE PP UUU C
         self.checksumallowed = allowchecksum
         self.generatorallowed = checksumgenerator
-        self.separator = separator
+        self.separator = separator.upper()
         
         self.expectedaccountlen = 4
         self.expectedmessagetype = "18"
@@ -23,6 +24,11 @@ class contact_id():
         self.expecteduserlen = 3
         self.expectedmsglen = 16 + len(separator)*5
         self.retchecksum = None
+        
+        self.allowedchar = set(string.hexdigits)
+        self.allowedchar.remove('a')
+        self.allowedchar.remove('A')
+        self.allowedchar.add(self.separator)
         
         if loggername is not None:
             self.log =logging.getLogger(loggername)
@@ -56,11 +62,32 @@ class contact_id():
     
     def _validatemessage(self):
         self.valid = True
+
+        self.splitmsg = self.message.split(self.separator)
+        if len(self.splitmsg) == 6:
+            self.splitmsg.insert(3,self.splitmsg[2])
+            self.splitmsg[2] = self.splitmsg[2][0]
+            self.splitmsg[3] = self.splitmsg[3][1:]
+        elif len(self.splitmsg)==7:
+            pass
+        else:
+            self.valid = False
+            self.log.error("Message content error:: could not be splitted: Current {0}".format(self.message))
+            return 
+
+        for s in self.splitmsg:
+            for c in s:
+                if c not in self.allowedchar:
+                    self.valid = False
+                    self.log.error("Message content error:: Invalid characters: allowed: {0} Current {1} Error : {2}".format(self.allowedchar, self.message, c))
+                    return
+                
         if len(self.message) != self.expectedmsglen:
             #LONGITUD DE MENSAJE ERRONEO
             if self.loggerenabled is True:
                 self.log.error("Message length error:: Expected {0} Current {1}".format(self.expectedmsglen, len(self.message)))
             self.valid = False
+            
             
         if len(self.splitmsg[0]) != self.expectedaccountlen:
             #LONGITUD DE CUENTA ERRONEA
@@ -124,24 +151,21 @@ class contact_id():
                                     -> PP: Group or Partition number (2 Hex digits 0-9, B-F). 00 indicate no specific group
                                     -> UUU: Zone number (Event reports) or User# (Open / Close reports ) (3 Hex digits 0-9,B-F ). 000 indicate no specific zone or user
                                     -> S: 1 Digit Hex checksum calculated such that: (Sum of all message digits + S) % 15
-            separator (_type_, optional): _description_. Defaults to None.
             separator (str, optional): Used to split string into parameters. Defaults to ' '.
 
         Returns:
             (dict | None) : If validation is true, returns a dictionary cointaining valid parameters, otherwhise returns None
         """
-        self.message = incmessage
+        self.message = incmessage.upper()
         self.retchecksum = None
         
         if separator is not None:
-            self.separator = separator
+            self.allowedchar.remove(self.separator)
+            self.separator = separator.upper()
+            self.allowedchar.add(self.separator)
             self.expectedlength = 16 + len(separator)*5
-
-        self.splitmsg = self.message.split(self.separator)
-        self.splitmsg.insert(3,self.splitmsg[2])
-        self.splitmsg[2] = self.splitmsg[2][0]
-        self.splitmsg[3] = self.splitmsg[3][1:]
-
+        
+        
         self._validatemessage()
         
         if self.valid is True:
@@ -151,7 +175,7 @@ class contact_id():
                 'AccountNumber' : self.splitmsg[0],
                 "MessageType" : self.splitmsg[1],
                 "Qualifier" : self.splitmsg[2],
-                "Eventcode" : self.splitmsg[3],
+                "EventCode" : self.splitmsg[3],
                 "PartitionNumber" : self.splitmsg[4],
                 "ZoneUserNumber" : self.splitmsg[5],
                 "Checksum" : self.splitmsg[6]
@@ -168,7 +192,7 @@ if __name__ == "__main__":
     alogger.addHandler(handler)
     alogger.setLevel(logging.DEBUG)
     
-    ex = contact_id(allowchecksum= True, checksumgenerator= True, separator= " ", loggername= "CID")
+    ex = contact_id(allowchecksum= True, checksumgenerator= False, separator= " ", loggername= "CID")
     print("TEST -> OK MSG:")
     ret = ex.processmessage(incmessage= "1111 18 1401 01 001 E")
     print(str(ret))
@@ -205,3 +229,10 @@ if __name__ == "__main__":
     ret = ex.processmessage(incmessage= "111 18 1401 01 001 0")
     print(str(ret))
     
+    print("TEST -> Invalid characters")
+    ret = ex.processmessage(incmessage= "rr11 18 1401 01 001 0")
+    print(str(ret))
+    
+    print("TEST -> Split error")
+    ret = ex.processmessage(incmessage= "1111aa18aa1602aa01aa001aab")
+    print(str(ret))

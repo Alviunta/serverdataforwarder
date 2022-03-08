@@ -10,13 +10,18 @@ dynaconf_merge = true
 
     [MQTT.attributes]
     qos = 0
+    #Mqtt application topic
     topic = "application/3/#"
+    # True -  JSON marshaler
+    # False - Protobuf marshaler (binary)
+    marshaler = true    
 
 #---------CID CONFIGURATION ----------    
 [CID]
     [CID.attributes]
     enablecheksumvalidation = true
     enablecheksumgenerator = true
+    separator = "aa"
 
 #---------SIA DC09 CONFIGURATION-------
 [DC09]
