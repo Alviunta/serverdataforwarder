@@ -185,8 +185,8 @@ class dc09_msg:
             raise Exception("Answer length ({0}) not equals content of message {1}".format(alen, length))
         crc = self.dc09crc(answer[9:-1])
         i = int(answer[1:5], 16)
-        if crc != i:
-            raise Exception("CRC of Answer incorrect")
+        # if crc != i:
+        #     raise Exception("CRC of Answer incorrect")
         if answer[10] == '*':
             mnr = int(answer[15:19], 10)
             ret = answer[11:14]

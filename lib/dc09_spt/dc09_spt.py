@@ -346,6 +346,8 @@ class dc09_spt:
             if antw is not None:
                 try:
                     res = dc09.dc09answer(msg_nr, antw.decode())
+                    # DESHABILITADO CONTROL DE CRC! (La recibidora lo calcula mal en algunos casos!)
+                    # Para habilitar: ir a dc09answer y descomentar las lineas correspondientes
                     if res is not None:
                         path.set_offset(res[1])
                         if res[0] == 'NAK':
