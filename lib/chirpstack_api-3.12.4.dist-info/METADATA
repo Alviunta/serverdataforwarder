@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: chirpstack-api
+Version: 3.12.4
+Summary: Chirpstack Python API
+Home-page: https://github.com/brocaar/chirpstack-api
+Author: Orne Brocaar
+Author-email: info@brocaar.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Communications
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Description-Content-Type: text/markdown
+Requires-Dist: grpcio
+Requires-Dist: google-api-core
+
+# chirpstack-api
+
+ChirpStack gRPC API message and service wrappers for Python.
+
+## Install
+
+```sh
+pip install chirpstack-api
+```
+
+## Usage
+
+All messages, services, constants, etc. are auto-generated from the ChirpStack protobuf definitions. The result is that
+this package structure matches that of the protobuf definitions.
+
+The protobuf definitions can be found here: https://github.com/brocaar/chirpstack-api/tree/master/protobuf
+
+## Links
+
+* [`chirpstack-api` Python package page](https://pypi.org/project/chirpstack-api/)
+* [ChirpStack documentation](https://www.chirpstack.io/)
+* [ChirpStack Application Server API examples](https://www.chirpstack.io/application-server/api/python-examples/)
+
+

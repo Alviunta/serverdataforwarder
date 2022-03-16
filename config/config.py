@@ -1,12 +1,6 @@
 
 from dynaconf import Dynaconf, Validator
-from logging.config import dictConfig
-"""
-En este archivo se importa la configuracion contenida en los archivos .toml
 
-Ademas se hacen validaciones para evitar errores.
-NO MODIFICAR ESTE ARCHIVO, CAMBIAR VALORES EN ARCHIVOS .toml
-"""
 settings = Dynaconf(
     envvar_prefix="DYNACONF",
     settings_files=['settings.toml', '.secrets.toml'],
@@ -78,7 +72,7 @@ LOGGING_CONFIG = {
                 'debug_console_handler', 
                 'info_timed_rotating_file_handler',
                 'error_rotating_file_handler',
-                'critical_file_handler'
+                'critical_file_handler',
                 ],
         },
         'mqtt': {
@@ -88,7 +82,7 @@ LOGGING_CONFIG = {
                 'debug_console_handler', 
                 'info_timed_rotating_file_handler',
                 'error_rotating_file_handler',
-                'critical_file_handler'
+                'critical_file_handler',
                 ],
         },
     },
@@ -113,13 +107,13 @@ LOGGING_CONFIG = {
             'level': 'ERROR',
             'formatter': 'error',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': './log/info.log',
+            'filename': './log/error.log',
             'mode': 'a',
             'maxBytes': 1048576,
             'backupCount': 10
         },
         'critical_file_handler': {  #Critical logs to file
-            'level': 'critical',
+            'level': 'CRITICAL',
             'formatter': 'error',
             'class': 'logging.FileHandler',
             'filename': './log/critical.log',

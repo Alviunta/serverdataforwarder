@@ -1,5 +1,4 @@
-import sys, traceback, datetime
-from tkinter import E
+import sys, traceback
 import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
@@ -23,11 +22,11 @@ def connect_mqtt():
 
         processed_message = cid.processmessage(up_msg.data.hex())
         if processed_message is None:
-            logger_CID.error("Error processing CID message {}".format(str(processed_message))) 
+            logger_CID.error("Error processing CID message {}".format(up_msg.data.hex())) 
         else:
-            if spt.state()['main primary path ok'] is False:
-                del spt
-                spt = setup_siaspt()
+            # if spt.state()['main primary path ok'] is False:
+            #     del spt
+            #     spt = setup_siaspt()
 
             try:
                 spt.send_msg('ADM-CID', {'account':  processed_message["AccountNumber"], 'q': processed_message["Qualifier"], 'code': processed_message["EventCode"], 'area':processed_message["PartitionNumber"], 'zone': processed_message["ZoneUserNumber"]}) 
@@ -40,7 +39,7 @@ def connect_mqtt():
                 stack_trace = list()
                 for trace in trace_back:
                     stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
-                logger_SIA.exception("Exception type : %s Exception message : %s Stack Trace %s" % (ex_type.__name__, ex_value, stack_trace))
+                logger_SIA.critical("Exception type : %s Exception message : %s Stack Trace %s" % (ex_type.__name__, ex_value, stack_trace))
             else:
                 logger_SIA.info("SIA msg sended:: Origin : {0} Msg: {1}".format(msg.topic, str(processed_message)))        
 
@@ -61,14 +60,13 @@ def connect_mqtt():
         #Event published when a downlink frame has been acknowledged by the gateway for transmission.
         txack_msg= unmarshal(msg.payload, integration.TxAckEvent())
         logger_MQTT.info("TxAck Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4} :: Ack: Downlink Frame Counter {5}".format(txack_msg.application_name, txack_msg.application_id, txack_msg.device_name, txack_msg.dev_eui.hex(), txack_msg.tx_info.gateway_id.hex(), txack_msg.f_cnt))
-        
     def on_message_error(client, userdata, msg):
         #Event published in case of an error related to payload scheduling or handling. E.g. in case when a payload could not be scheduled as it exceeds the maximum payload-size.
         error_msg= unmarshal(msg.payload, integration.ErrorEvent())
         logger_MQTT.error("Error Event :: App: {0}[{1}] :: Device {2}[{3}] :: Error: {4}".format(error_msg.application_name, error_msg.application_id, error_msg.device_name, error_msg.dev_eui.hex(), error_msg.error))
     def on_message(client, userdata, msg):
         #Default message, no event-topic match. ???????
-        logger_MQTT("No event-topic match :: Topic: {0} :: Payload: {1} :: Qos: {2}".format(msg.topic, msg.payload, msg.qos))
+        logger_MQTT.warning("No event-topic match :: Topic: {0} :: Payload: {1} :: Qos: {2}".format(msg.topic, msg.payload, msg.qos))
     def unmarshal(body, pl):
         if MQTTconfig.attributes.marshaler:
             return Parse(body,pl)
