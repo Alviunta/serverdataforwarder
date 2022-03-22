@@ -24,9 +24,6 @@ def connect_mqtt():
         if processed_message is None:
             logger_CID.error("Error processing CID message {}".format(up_msg.data.hex())) 
         else:
-            # if spt.state()['main primary path ok'] is False:
-            #     del spt
-            #     spt = setup_siaspt()
 
             try:
                 spt.send_msg('ADM-CID', {'account':  processed_message["AccountNumber"], 'q': processed_message["Qualifier"], 'code': processed_message["EventCode"], 'area':processed_message["PartitionNumber"], 'zone': processed_message["ZoneUserNumber"]}) 
@@ -51,7 +48,8 @@ def connect_mqtt():
     def on_message_join(client, userdata, msg):
         #Event published when a device joins the network. Please note that this is sent after the first received uplink (data) frame.
         join_msg= unmarshal(msg.payload, integration.JoinEvent())
-        logger_MQTT.info("Join Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4}".format(join_msg.application_name, join_msg.application_id, join_msg.device_name, join_msg.dev_eui.hex(), join_msg.rx_info.gateway_id.hex()))
+        logger_MQTT.info("Join Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4}".format(join_msg.application_name, join_msg.application_id, join_msg.device_name, join_msg.dev_eui.hex(), join_msg.rx_info[0].gateway_id.hex()))
+        
     def on_message_ack(client, userdata, msg):
         #Event published on downlink frame acknowledgements.
         ack_msg= unmarshal(msg.payload, integration.AckEvent())
@@ -59,7 +57,7 @@ def connect_mqtt():
     def on_message_txack(client, userdata, msg):
         #Event published when a downlink frame has been acknowledged by the gateway for transmission.
         txack_msg= unmarshal(msg.payload, integration.TxAckEvent())
-        logger_MQTT.info("TxAck Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4} :: Ack: Downlink Frame Counter {5}".format(txack_msg.application_name, txack_msg.application_id, txack_msg.device_name, txack_msg.dev_eui.hex(), txack_msg.tx_info.gateway_id.hex(), txack_msg.f_cnt))
+        logger_MQTT.info("TxAck Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4} :: Ack: Downlink Frame Counter {5}".format(txack_msg.application_name, txack_msg.application_id, txack_msg.device_name, txack_msg.dev_eui.hex(), txack_msg.tx_info[0].gateway_id.hex(), txack_msg.f_cnt))
     def on_message_error(client, userdata, msg):
         #Event published in case of an error related to payload scheduling or handling. E.g. in case when a payload could not be scheduled as it exceeds the maximum payload-size.
         error_msg= unmarshal(msg.payload, integration.ErrorEvent())
@@ -127,44 +125,6 @@ def startmain():
 
     client = connect_mqtt()
     client.loop_start()
-
-
-    while True:
-        print("Ingrese \n\r 1- Mensaje CID formato: AAAASTTSQEEESPPSUUUSC\n\r 2- State\n\r 3- Logger\n\r 4- Exit")
-        recived_CID = input()
-        if recived_CID == "State": 
-            print(str(spt.state()))
-        elif recived_CID == "Exit":
-            exit()
-        elif recived_CID == "Logger":
-            for k,v in  logging.Logger.manager.loggerDict.items()  :
-                print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) ) 
-                if not isinstance(v, logging.PlaceHolder):
-                    for h in v.handlers:
-                        print('     +++',str(h.__class__)[8:-2] )
-        else:
-            processed_message = cid.processmessage(recived_CID)
-            if processed_message is None:
-                logger_CID.error("Error processing CID message {}".format(processed_message)) 
-            else:
-                if spt.state()['main primary path ok'] is False:
-                    del spt
-                    spt = setup_siaspt()
-                try:
-                    spt.send_msg('ADM-CID', {'account':  processed_message["AccountNumber"], 'q': processed_message["Qualifier"], 'code': processed_message["EventCode"], 'area':processed_message["PartitionNumber"], 'zone': processed_message["ZoneUserNumber"]}) 
-
-                except Exception as ex:
-                    # Get current system exception
-                    ex_type, ex_value, ex_traceback = sys.exc_info()
-                    # Extract unformatter stack traces as tuples
-                    trace_back = traceback.extract_tb(ex_traceback)
-                    # Format stacktrace
-                    stack_trace = list()
-                    for trace in trace_back:
-                        stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
-                    logger_SIA.exception("Exception type : %s Exception message : %s Stack Trace %s" % (ex_type.__name__, ex_value, stack_trace))
-            
-            del processed_message
 
 if __name__ == "__main__":
     startmain()
