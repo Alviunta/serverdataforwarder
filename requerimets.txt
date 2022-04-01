@@ -1,3 +1,4 @@
-dynaconf==3.1.7
-paho-mqtt==1.6.1
-chirpstack_api==3.12.4
+dynaconf == 3.1.5
+paho-mqtt == 1.6.1
+chirpstack-api == 3.12.4
+cryptography >= 3.1

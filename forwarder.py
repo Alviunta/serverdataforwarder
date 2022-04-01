@@ -1,16 +1,23 @@
+#System libs
 import sys, traceback
 import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
+from systemd import daemon
+from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.blocking import BlockingScheduler
+#DSC Protocols libs
 from dc09_spt import dc09_spt as dc09
 from contact_id import contact_id as contactid
+#Chirpstack libs
 from paho.mqtt import client as mqtt
-from config.config import settings, LOGGING_CONFIG
 from chirpstack_api.as_pb import integration
 from google.protobuf.json_format import Parse
+#Configuration files
+from config.config import settings, LOGGING_CONFIG
+
 
 #MQTT FUNC
-
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc != 0:
@@ -49,7 +56,6 @@ def connect_mqtt():
         #Event published when a device joins the network. Please note that this is sent after the first received uplink (data) frame.
         join_msg= unmarshal(msg.payload, integration.JoinEvent())
         logger_MQTT.info("Join Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4}".format(join_msg.application_name, join_msg.application_id, join_msg.device_name, join_msg.dev_eui.hex(), join_msg.rx_info[0].gateway_id.hex()))
-        
     def on_message_ack(client, userdata, msg):
         #Event published on downlink frame acknowledgements.
         ack_msg= unmarshal(msg.payload, integration.AckEvent())
@@ -57,7 +63,8 @@ def connect_mqtt():
     def on_message_txack(client, userdata, msg):
         #Event published when a downlink frame has been acknowledged by the gateway for transmission.
         txack_msg= unmarshal(msg.payload, integration.TxAckEvent())
-        logger_MQTT.info("TxAck Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4} :: Ack: Downlink Frame Counter {5}".format(txack_msg.application_name, txack_msg.application_id, txack_msg.device_name, txack_msg.dev_eui.hex(), txack_msg.tx_info[0].gateway_id.hex(), txack_msg.f_cnt))
+        logger_MQTT.info("TxAck Event :: App: {0}[{1}] :: Device: {2}[{3}] :: Gateway: {4} :: Ack: Downlink Frame Counter {5}".format(txack_msg.application_name, txack_msg.application_id, txack_msg.device_name, txack_msg.dev_eui.hex(), txack_msg.tx_info.gateway_id.hex(), txack_msg.f_cnt))
+
     def on_message_error(client, userdata, msg):
         #Event published in case of an error related to payload scheduling or handling. E.g. in case when a payload could not be scheduled as it exceeds the maximum payload-size.
         error_msg= unmarshal(msg.payload, integration.ErrorEvent())
@@ -79,7 +86,6 @@ def connect_mqtt():
         client.message_callback_add("application/+/device/+/event/txack",on_message_txack)
         client.message_callback_add("application/+/device/+/event/error",on_message_error)
         client.on_message = on_message
-    
     
     client = mqtt.Client(client_id ="")
     client.enable_logger(logger_MQTT)
@@ -103,6 +109,9 @@ def setup_siaspt():
     spt.start_routine([{'interval': DC09config.attributes.heartbeat,  'time':  'now', 'type': 'SIA-DCS',  'code': DC09config.attributes.pollmsg}])   
     return spt
 
+#Systemd FUNC
+def watchdog_systemd():
+    daemon.notify(daemon.Notification.WATCHDOG)
 
 def startmain():
     
@@ -125,6 +134,13 @@ def startmain():
 
     client = connect_mqtt()
     client.loop_start()
+    
+    daemon.notify(daemon.Notification.READY)
+    
+    sched = BackgroundScheduler()
+    sched.add_job(watchdog_systemd, 'interval', seconds=2)
+    sched.start()
+    
 
 if __name__ == "__main__":
     startmain()
