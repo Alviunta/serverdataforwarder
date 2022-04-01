@@ -1,6 +1,6 @@
 dynaconf == 3.1.5
 paho-mqtt == 1.6.1
 chirpstack-api == 3.12.4
-cryptography >= 3.1
+cryptography >= 2.1
 cysystemd == 1.5.2
 apscheudler == 3.9.1 
