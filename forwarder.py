@@ -3,7 +3,7 @@ import sys, traceback
 import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
-from systemd import daemon
+from cysystemd import daemon 
 from apscheduler.schedulers.background import BackgroundScheduler
 # from apscheduler.schedulers.blocking import BlockingScheduler
 #DSC Protocols libs
@@ -125,6 +125,7 @@ def startmain():
     logger_CID = logging.getLogger('contact_id')
     logger_MQTT = logging.getLogger('mqtt')
     logger_SIA = logging.getLogger('dc09_spt')
+    logging.getLogger('apscheduler.executors.default').setLevel(logging.WARNING)
 
     global spt
     spt = setup_siaspt()

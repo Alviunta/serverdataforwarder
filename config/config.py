@@ -89,7 +89,7 @@ LOGGING_CONFIG = {
     'handlers': {
         'debug_console_handler': {
             'level': 'DEBUG',
-            'formatter': 'debug',
+            'formatter': 'journal',
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',
         },
@@ -138,6 +138,9 @@ LOGGING_CONFIG = {
         },
         'info':{
             'format': '%(asctime)s-%(levelname)s-%(name)s::%(message)s'
+        },
+        'journal':{
+            'format': '(module)s|%(lineno)s %(message)s'
         }
     },
 }
