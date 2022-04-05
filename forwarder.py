@@ -3,9 +3,8 @@ import sys, traceback
 import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
-from cysystemd import daemon 
-from apscheduler.schedulers.background import BackgroundScheduler
-# from apscheduler.schedulers.blocking import BlockingScheduler
+from cysystemd import daemon
+import schedule
 #DSC Protocols libs
 from dc09_spt import dc09_spt as dc09
 from contact_id import contact_id as contactid
@@ -44,6 +43,7 @@ def connect_mqtt():
                 for trace in trace_back:
                     stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
                 logger_SIA.critical("Exception type : %s Exception message : %s Stack Trace %s" % (ex_type.__name__, ex_value, stack_trace))
+                daemon.notify(daemon.Notification.ERRNO,value=71) #EPROTO
             else:
                 logger_SIA.info("SIA msg sended:: Origin : {0} Msg: {1}".format(msg.topic, str(processed_message)))        
 
@@ -109,12 +109,12 @@ def setup_siaspt():
     spt.start_routine([{'interval': DC09config.attributes.heartbeat,  'time':  'now', 'type': 'SIA-DCS',  'code': DC09config.attributes.pollmsg}])   
     return spt
 
-#Systemd FUNC
+#Systemd Watchdog FUNC
 def watchdog_systemd():
     daemon.notify(daemon.Notification.WATCHDOG)
 
 def startmain():
-    
+
     global CIDconfig, MQTTconfig, DC09config
     CIDconfig = settings.get("CID")
     MQTTconfig = settings.get("MQTT")
@@ -125,7 +125,8 @@ def startmain():
     logger_CID = logging.getLogger('contact_id')
     logger_MQTT = logging.getLogger('mqtt')
     logger_SIA = logging.getLogger('dc09_spt')
-    logging.getLogger('apscheduler.executors.default').setLevel(logging.WARNING)
+    schedule_logger = logging.getLogger('schedule')
+    schedule_logger.setLevel(level=logging.DEBUG)
 
     global spt
     spt = setup_siaspt()
@@ -137,10 +138,9 @@ def startmain():
     client.loop_start()
     
     daemon.notify(daemon.Notification.READY)
-    
-    sched = BackgroundScheduler()
-    sched.add_job(watchdog_systemd, 'interval', seconds=2)
-    sched.start()
+    schedule.every(2).seconds.do(watchdog_systemd)
+    while True:
+        schedule.run_pending()
     
 
 if __name__ == "__main__":

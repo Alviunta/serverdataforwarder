@@ -52,11 +52,11 @@ LOGGING_CONFIG = {
     'version': 1,
     'loggers': {
         '': {  # root logger
-            'level': 'NOTSET',
+            'level': 'WARNING',
             'handlers': ['debug_console_handler'],
         },
         'contact_id': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
             'handlers': [
                 'debug_console_handler', 
@@ -66,7 +66,7 @@ LOGGING_CONFIG = {
                 ],
         },
         'dc09_spt': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
             'handlers': [
                 'debug_console_handler', 
@@ -76,7 +76,7 @@ LOGGING_CONFIG = {
                 ],
         },
         'mqtt': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
             'handlers': [
                 'debug_console_handler', 
@@ -119,15 +119,9 @@ LOGGING_CONFIG = {
             'filename': './log/critical.log',
             'mode': 'a',
         },
-        # 'critical_mail_handler': {
-        #     'level': 'NOTSET',
-        #     'formatter': 'error',
-        #     'class': 'logging.handlers.SMTPHandler',
-        #     'mailhost' : 'localhost',
-        #     'fromaddr': 'monitoring@domain.com',
-        #     'toaddrs': ['dev@domain.com', 'qa@domain.com'],
-        #     'subject': 'Critical error with application name'
-        # }
+        'null_handler': {
+            'class': 'logging.NullHandler',
+        },
     },
     'formatters': {
         'error': {
@@ -140,7 +134,7 @@ LOGGING_CONFIG = {
             'format': '%(asctime)s-%(levelname)s-%(name)s::%(message)s'
         },
         'journal':{
-            'format': '(module)s|%(lineno)s %(message)s'
-        }
+            'format': '%(module)s|%(lineno)s %(message)s'
+        },
     },
 }
