@@ -1,5 +1,5 @@
 #System libs
-import sys, traceback
+import sys, os, traceback
 import logging, logging.config
 sys.path.append('./lib')
 sys.path.append('./config')
@@ -114,6 +114,9 @@ def watchdog_systemd():
     daemon.notify(daemon.Notification.WATCHDOG)
 
 def startmain():
+    
+    if not os.path.exists(os.getcwd()+'/log'):
+        os.makedirs(os.getcwd()+'/log')
 
     global CIDconfig, MQTTconfig, DC09config
     CIDconfig = settings.get("CID")
