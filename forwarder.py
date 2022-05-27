@@ -25,8 +25,9 @@ def connect_mqtt():
         #Contains the data and meta-data for an uplink application payload.
         up_msg= unmarshal(msg.payload, integration.UplinkEvent())
         logger_MQTT.info("Uplink Event:: App: {0}[{1}] :: Device: {2}[{3}] :: Data {4}".format(up_msg.application_name, up_msg.application_id, up_msg.device_name, up_msg.dev_eui.hex(), up_msg.data.hex()))
-
-        processed_message = cid.processmessage(up_msg.data.hex())
+        processed_message = None
+        if (len(up_msg.data.hex) > 0):
+            processed_message = cid.processmessage(up_msg.data.hex())
         if processed_message is None:
             logger_CID.error("Error processing CID message {}".format(up_msg.data.hex())) 
         else:

@@ -26,8 +26,6 @@ class contact_id():
         self.retchecksum = None
         
         self.allowedchar = set(string.hexdigits)
-        self.allowedchar.remove('a')
-        self.allowedchar.remove('A')
         self.allowedchar.add(self.separator)
         
         if loggername is not None:
@@ -62,7 +60,10 @@ class contact_id():
     
     def _validatemessage(self):
         self.valid = True
-
+        if (len(self.message) <= 1):
+            self.valid = False
+            self.log.error("Message content null")
+            return
         self.splitmsg = self.message.split(self.separator)
         if len(self.splitmsg) == 6:
             self.splitmsg.insert(3,self.splitmsg[2])

@@ -52,7 +52,7 @@ LOGGING_CONFIG = {
     'version': 1,
     'loggers': {
         '': {  # root logger
-            'level': 'WARNING',
+            'level': 'DEBUG',
             'handlers': ['debug_console_handler'],
         },
         'contact_id': {
