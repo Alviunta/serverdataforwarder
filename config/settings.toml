@@ -34,7 +34,7 @@ dynaconf_merge = true
     ps = "primary"    #primary/secondary
 
     [DC09.attributes]
-    account = "FFFF"
+    account = "FAFA"
     line = 1
     receiver = 1
     heartbeat = 600 #Intervalo en segundos del keepalive
