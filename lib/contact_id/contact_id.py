@@ -60,9 +60,9 @@ class contact_id():
     
     def _validatemessage(self):
         self.valid = True
-        if (len(self.message) <= 1):
+        if len(self.message) < 1:
             self.valid = False
-            self.log.error("Message content null")
+            self.log.error("Void message content")
             return
         self.splitmsg = self.message.split(self.separator)
         if len(self.splitmsg) == 6:
